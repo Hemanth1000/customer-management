@@ -21,11 +21,11 @@ class ListCustomerComponent extends Component {
     }
 
     addCustomer(){
-        this.props.history.push('/add-customer');
+        this.props.history.push('/add-customer/_add');
     }
 
     editCustomer(id){
-        this.props.history.push(`/update-customer/${id}`);
+        this.props.history.push(`/add-customer/${id}`);
     }
 
     deleteCustomer(){

@@ -6,6 +6,7 @@ class CreateCustomerComponent extends Component {
         super(props)
 
         this.state = {
+            id: this.props.match.params.id,
             firstName: "",
             lastName: "",
             emailId: ""
@@ -15,6 +16,21 @@ class CreateCustomerComponent extends Component {
         this.changelastNameHandler = this.changelastNameHandler.bind(this);
         this.changeEmailIdHandler = this.changeEmailIdHandler.bind(this);
         this.saveCustomer = this.saveCustomer.bind(this);
+    }
+
+    componentDidMount(){
+        if(this.state.id === '_add'){
+            return;
+        }else{
+            CustomerService.getCustomerById(this.state.id).then((resp) => {
+                let customer = resp.data;
+                this.setState({
+                    firstName: customer.firstName,
+                    lastName: customer.lastName,
+                    emailId: customer.emailId
+                });
+            });
+        }
     }
 
     changeFirstNameHandler = (event) => {
@@ -33,13 +49,27 @@ class CreateCustomerComponent extends Component {
        event.preventDefault();
        let customer = {firstName: this.state.firstName, lastName: this.state.lastName, emailId: this.state.emailId};
        
-       CustomerService.createCustomer(customer).then(res => {
-            this.props.history.push("/customers");
-       });
+       if(this.state.id === -1){
+            CustomerService.createCustomer(customer).then(res => {
+                this.props.history.push("/customers");
+            });
+       }else{
+            CustomerService.updateCustomerDetails(this.state.id, customer).then(res => {
+                this.props.history.push("/customers");
+            });
+       }
     }
 
     cancel(){
         this.props.history.push('/customers');
+    }
+
+    getTitle(){
+        if(this.state.id === '_add'){
+            return <h3 className='text-center'>Add Customer</h3>
+        }else{
+            return <h3 className='text-center'>Add Customer</h3>
+        }
     }
 
     render() {
@@ -48,7 +78,7 @@ class CreateCustomerComponent extends Component {
                 <div className='container'>
                     <div className='row'>
                         <div className='card col-md-6 offset-md-6 offset-md-3'>
-                            <h3 className='text-center'>Add Customer</h3>
+                            {this.getTitle()}
                             <div className='card-body'>
                                 <form>
                                     <div className='form-group'>
