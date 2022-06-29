@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CustomerService from '../services/CustomerService';
 
 class CreateCustomerComponent extends Component {
     constructor(props){
@@ -31,7 +32,10 @@ class CreateCustomerComponent extends Component {
     saveCustomer = (event) => {
        event.preventDefault();
        let customer = {firstName: this.state.firstName, lastName: this.state.lastName, emailId: this.state.emailId};
-       console.log('customer : ' + JSON.stringify(customer)); 
+       
+       CustomerService.createCustomer(customer).then(res => {
+            this.props.history.push("/customers");
+       });
     }
 
     cancel(){

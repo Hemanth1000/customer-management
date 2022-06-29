@@ -7,6 +7,10 @@ class CustomerService {
     getCustomers(){
         return axios.get(CUSTOMER_API_BASE_URL);
     }
+
+    createCustomer(customer){
+        return axios.post(CUSTOMER_API_BASE_URL, customer);
+    }
 }
 
 export default new CustomerService()
