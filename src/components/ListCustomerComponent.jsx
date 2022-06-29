@@ -10,6 +10,8 @@ class ListCustomerComponent extends Component {
             customers: []
         }
         this.addCustomer = this.addCustomer.bind(this);
+        this.editCustomer = this.editCustomer.bind(this);
+        this.deleteCustomer = this.deleteCustomer.bind(this);
     }
 
     componentDidMount(){
@@ -20,6 +22,14 @@ class ListCustomerComponent extends Component {
 
     addCustomer(){
         this.props.history.push('/add-customer');
+    }
+
+    editCustomer(id){
+        this.props.history.push(`/update-customer/${id}`);
+    }
+
+    deleteCustomer(){
+
     }
 
     render() {
@@ -49,6 +59,10 @@ class ListCustomerComponent extends Component {
                                             <td> {customer.firstName}</td>
                                             <td> {customer.lastName}</td>
                                             <td> {customer.emailId}</td>
+                                            <td>
+                                                <button onClick={() => this.editCustomer(customer.id)} className="btn btn-info">Update</button>
+                                                <button onClick={() => this.deleteCustomer(customer.id)} className="btn btn-danger" style={{marginLeft: "10px"}}>Delete</button>
+                                            </td>
                                         </tr>
                                     )
                                 )
