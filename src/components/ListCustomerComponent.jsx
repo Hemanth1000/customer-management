@@ -9,6 +9,7 @@ class ListCustomerComponent extends Component {
         this.state = {
             customers: []
         }
+        this.addCustomer = this.addCustomer.bind(this);
     }
 
     componentDidMount(){
@@ -17,10 +18,18 @@ class ListCustomerComponent extends Component {
         });
     }
 
+    addCustomer(){
+        this.props.history.push('/add-customer');
+    }
+
     render() {
         return (
             <div>
                 <h2 className='text-center'>Customer List</h2>
+                <div className='col'>
+                    <button className='btn btn-primary' onClick={ this.addCustomer }>Add Customer</button>
+                </div>
+                <br></br>
                 <div className='row'>                    
                     <table className='table table-striped table-bordered'>
                         <thead>
